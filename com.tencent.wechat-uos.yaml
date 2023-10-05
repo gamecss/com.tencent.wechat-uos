@@ -39,7 +39,7 @@ modules:
       - type: script
         commands:
           - export TMPDIR="$XDG_RUNTIME_DIR/app/$FLATPAK_ID"
-          - exec zypak-wrapper /app/extra/wechat/wechat.sh "$@"
+          - exec zypak-wrapper /app/extra/wechat/weixin.sh "$@"
         dest-filename: wechat.sh
 
       - type: script
@@ -47,11 +47,11 @@ modules:
           - bsdtar --to-stdout -xf wechat-uos.deb data.* | bsdtar -xf -
           - bsdtar -xzf license.tar.gz
           - mv opt/apps/com.tencent.weixin/files/weixin wechat
-          - mv usr/share .
-          - mv license/etc .
-          - mv license/var .
+          - mv usr/share /app/
+          - mv license/etc /app/
+          - mv license/var /app/
           - rm share/applications/weixin.desktop
-          - rm -rf wechat.deb license.tar.gz usr opt license data.*
+          - rm -rf wechat-uos.deb license.tar.gz usr opt license data.*
         dest-filename: apply_extra
 
       - type: file
