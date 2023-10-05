@@ -81,7 +81,7 @@ modules:
         filename: wechat-uos.deb
         only-arches: [aarch64]
         url: https://home-store-packages.uniontech.com/appstore/pool/appstore/c/com.tencent.weixin/com.tencent.weixin_2.1.5_arm64.deb
-        sha256: v5ef1853d8265b183ea4720f272b046cd07579ffe436b50093f92e0455635a732
+        sha256: 5ef1853d8265b183ea4720f272b046cd07579ffe436b50093f92e0455635a732
         size: 81851040
         # x-checker-data:
         #   type: anitya
@@ -101,4 +101,5 @@ modules:
         sha256: 2417ac0e6720fe8da55ee59f16e36cfe96737bc21432460a322bb0f395e3a521
       - type: file
         path: local.conf
+
 
