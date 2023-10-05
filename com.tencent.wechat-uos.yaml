@@ -1,9 +1,9 @@
 app-id: com.tencent.wechat-uos
-runtime: org.gnome.Platform
-runtime-version: '45'
-sdk: org.gnome.Sdk
+runtime: org.freedesktop.Sdk
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
 base: org.electronjs.Electron2.BaseApp
-base-version: '22.08'
+base-version: '23.08'
 command: wechat-uos
 separate-locales: false
 
@@ -31,7 +31,7 @@ modules:
   - name: wechat
     buildsystem: simple
     build-commands:
-      - install apply_extra $FLATPAK_DEST/
+      - install apply_extra $FLATPAK_DEST/bin
       - install -Dm755 wechat.sh $FLATPAK_DEST/bin/wechat-uos
       - install -Dm644 com.tencent.wechat-uos.metainfo.xml -t $FLATPAK_DEST/share/metainfo
       - install -Dm644 com.tencent.wechat-uos.desktop -t $FLATPAK_DEST/share/applications
@@ -39,20 +39,17 @@ modules:
       - type: script
         commands:
           - export TMPDIR="$XDG_RUNTIME_DIR/app/$FLATPAK_ID"
-          - if [ -e $XDG_RUNTIME_DIR/${WAYLAND_DISPLAY:=wayland-0} ]; then
-          - wayland_opt="--ozone-platform-hint=auto --enable-wayland-ime"
-          - fi
-          - exec zypak-wrapper /app/extra/wechat-uos/wechat-uos $wayland_opt "$@"
+          - exec zypak-wrapper /app/extra/wechat/wechat.sh "$@"
         dest-filename: wechat.sh
 
       - type: script
         commands:
           - bsdtar --to-stdout -xf wechat.deb data.* | bsdtar -xf -
           - badtar -xzf license.tar.gz
-          - mv opt/apps/com.tencent.weixin/files/weixin/resources/app wechat_app
-          - mv usr/share . 
-          - mv license/etc .
-          - mv license/var .
+          - mv opt/apps/com.tencent.weixin/files/weixin wechat
+          - cp -r usr/share/* $FLATPAK_DEST/share/
+          - cp license/etc/* $FLATPAK_DEST/etc/
+          - cp -r license/var/* $FLATPAK_DEST/var/
           - rm share/applications/weixin.desktop
           - rm -rf wechat.deb license.tar.gz usr opt license data.*
         dest-filename: apply_extra
@@ -63,7 +60,8 @@ modules:
       - type: file
         path: com.tencent.wechat-uos.desktop
 
-      - type: extra-
+      - type: file
+        path: license.tar.gz
 
       - type: extra-data
         filename: wechat-uos.deb

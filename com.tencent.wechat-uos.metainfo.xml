@@ -2,7 +2,7 @@
 <component type="desktop-application">
   <id>com.tencent.wechat-uos</id>
   <name>微信</name>
-  <project_license>LicenseRef-proprietary=https://weixin.qq.com/cgi-bin/readtemplate?t=weixin_agreement&s=default&lang=zh_CN&cc=CN&hashuin=654053574&pass_ticket=mNIQKL9uOKwuHMWK357edS0Y0Ey7zuCEwdjn%2BoeRy9WDK7ZBiqQlYo4qVtM7gpAl&wechat_real_lang=zh_CN&wx_header=2</project_license>
+  <project_license>LicenseRef-proprietary=https://weixin.qq.com/cgi-bin/readtemplate?t=weixin_agreement&amp;s=default&amp;lang=zh_CN&amp;cc=CN&amp;hashuin=654053574&amp;pass_ticket=mNIQKL9uOKwuHMWK357edS0Y0Ey7zuCEwdjn%2BoeRy9WDK7ZBiqQlYo4qVtM7gpAl&amp;wechat_real_lang=zh_CN&amp;wx_header=2</project_license>
   <developer_name>Tencent</developer_name>
   <summary>微信官方原生桌面版 WeChat desktop</summary>
   <metadata_license>ISC</metadata_license>
@@ -13,8 +13,6 @@
     <p>微信官方原生桌面版 WeChat desktop</p>
     <p>NOTE: This wrapper is not verified by, affiliated with, or supported by Tencent.</p>
   </description>
-  <screenshots>
-  </screenshots>
   <categories>
     <category>InstantMessaging</category>
     <category>Network</category>
