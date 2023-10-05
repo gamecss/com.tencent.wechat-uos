@@ -1,17 +1,15 @@
-pkgbase = wechat-uos
-	pkgdesc = 微信官方原生桌面版 WeChat desktop
-	pkgver = 2.1.5
-	pkgrel = 3
-	epoch = 2
-	url = https://weixin.qq.com/
-	arch = x86_64
-	arch = aarch64
-	license = ISC
-	depends = electron19
-	depends = bubblewrap
-	depends = lsb-release
-	depends = openssl-1.1
-	optdepends = scrot: For in-app screenshot
+# Flatpak wrapper of wechat-uos
+
+forked from [Archlinux user repository](https://aur.archlinux.org/cgit/aur.git/?h=wechat-uos) and [com.qq.QQ metadata](https://github.com/flathub/com.qq.QQ)
+
+```markdown
+# Maintainer: DuckSoft <realducksoft at gmail dot com>
+# Maintainer: sukanka <su975853527 at gmail dot com>
+# Contributor: sihuan <sihuan at sakuya.love>
+# Contributor: Nick Cao <nickcao at nichi dot co>
+# Contributor: Xuanwo <xuanwo@archlinuxcn.org>
+```
+```
 	source = wechat.sh
 	source = wechat-uos.desktop
 	source = license.tar.gz
@@ -22,5 +20,4 @@ pkgbase = wechat-uos
 	sha512sums_x86_64 = 89bc2c8c087b744e245f39fee7d73f953c1349a68c493df1e4f0d187f2e7450d47ad7507fa6abcb91625c6240707da83f421f513d696eb5fc95b808ef779fc95
 	source_aarch64 = wechat-2.1.5-aarch64.deb::https://home-store-packages.uniontech.com/appstore/pool/appstore/c/com.tencent.weixin/com.tencent.weixin_2.1.5_arm64.deb
 	sha512sums_aarch64 = 905750c7c23aa17e8c04a2cd5f91f055f9a88794b9945437afc1c8b43c0443745da32094c7523ecbfa2d61c5699fa465062d56b241e49f5d3b09faa2ba36bd8e
-
-pkgname = wechat-uos
+```

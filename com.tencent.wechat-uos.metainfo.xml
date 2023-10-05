@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.tencent.wechat-uos</id>
+  <name>微信</name>
+  <project_license>LicenseRef-proprietary=https://weixin.qq.com/cgi-bin/readtemplate?t=weixin_agreement&s=default&lang=zh_CN&cc=CN&hashuin=654053574&pass_ticket=mNIQKL9uOKwuHMWK357edS0Y0Ey7zuCEwdjn%2BoeRy9WDK7ZBiqQlYo4qVtM7gpAl&wechat_real_lang=zh_CN&wx_header=2</project_license>
+  <developer_name>Tencent</developer_name>
+  <summary>微信官方原生桌面版 WeChat desktop</summary>
+  <metadata_license>ISC</metadata_license>
+  <launchable type="desktop-id">com.qq.QQ.desktop</launchable>
+  <url type="homepage">https://im.qq.com</url>
+  <url type="help">https://kf.qq.com/product/QQ.html</url>
+  <description>
+    <p>微信官方原生桌面版 WeChat desktop</p>
+    <p>NOTE: This wrapper is not verified by, affiliated with, or supported by Tencent.</p>
+  </description>
+  <screenshots>
+  </screenshots>
+  <categories>
+    <category>InstantMessaging</category>
+    <category>Network</category>
+  </categories>
+  <releases>
+    <release version="2.1.5" date="2023-01-11"/>
+  </releases>
+  <content_rating type="oars-1.1">
+    <content_attribute id="social-chat">intense</content_attribute>
+    <content_attribute id="social-info">intense</content_attribute>
+    <content_attribute id="social-audio">intense</content_attribute>
+    <content_attribute id="social-contacts">intense</content_attribute>
+  </content_rating>
+  <update_contact>gamecss at github</update_contact>
+</component>

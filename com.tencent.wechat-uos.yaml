@@ -1,0 +1,102 @@
+app-id: com.tencent.wechat-uos
+runtime: org.gnome.Platform
+runtime-version: '45'
+sdk: org.gnome.Sdk
+base: org.electronjs.Electron2.BaseApp
+base-version: '22.08'
+command: wechat-uos
+separate-locales: false
+
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=fallback-x11
+  - --socket=pulseaudio
+  - --device=all
+  - --filesystem=xdg-download
+  - --talk-name=org.gnome.Shell.Screencast
+  - --talk-name=org.freedesktop.Notifications
+  - --talk-name=org.kde.StatusNotifierWatcher
+  - --system-talk-name=org.freedesktop.login1
+  - --filesystem=xdg-run/pipewire-0
+  - --filesystem=/tmp
+
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /share/gtk-doc
+  - '*.la'
+
+modules:
+  - name: wechat
+    buildsystem: simple
+    build-commands:
+      - install apply_extra $FLATPAK_DEST/
+      - install -Dm755 wechat.sh $FLATPAK_DEST/bin/wechat-uos
+      - install -Dm644 com.tencent.wechat-uos.metainfo.xml -t $FLATPAK_DEST/share/metainfo
+      - install -Dm644 com.tencent.wechat-uos.desktop -t $FLATPAK_DEST/share/applications
+    sources:
+      - type: script
+        commands:
+          - export TMPDIR="$XDG_RUNTIME_DIR/app/$FLATPAK_ID"
+          - if [ -e $XDG_RUNTIME_DIR/${WAYLAND_DISPLAY:=wayland-0} ]; then
+          - wayland_opt="--ozone-platform-hint=auto --enable-wayland-ime"
+          - fi
+          - exec zypak-wrapper /app/extra/wechat-uos/wechat-uos $wayland_opt "$@"
+        dest-filename: wechat.sh
+
+      - type: script
+        commands:
+          - bsdtar --to-stdout -xf wechat.deb data.* | bsdtar -xf -
+          - badtar -xzf license.tar.gz
+          - mv opt/apps/com.tencent.weixin/files/weixin/resources/app wechat_app
+          - mv usr/share . 
+          - mv license/etc .
+          - mv license/var .
+          - rm share/applications/weixin.desktop
+          - rm -rf wechat.deb license.tar.gz usr opt license data.*
+        dest-filename: apply_extra
+
+      - type: file
+        path: com.tencent.wechat-uos.metainfo.xml
+
+      - type: file
+        path: com.tencent.wechat-uos.desktop
+
+      - type: extra-
+
+      - type: extra-data
+        filename: wechat-uos.deb
+        only-arches: [x86_64]
+        url: https://home-store-packages.uniontech.com/appstore/pool/appstore/c/com.tencent.weixin/com.tencent.weixin_2.1.5_amd64.deb
+        sha256: bd537bc3ea0f5cd4cc27f835469c3f0152c8cad31723e80b89e36e75dcb22181
+        size: 84343836
+        # x-checker-data:
+        #   type: anitya
+        #   url-template: https://home-store-packages.uniontech.com/appstore/pool/appstore/c/com.tencent.weixin/com.tencent.weixin_$version_amd64.deb
+        #   is-main-source: true
+
+      - type: extra-data
+        filename: wechat-uos.deb
+        only-arches: [aarch64]
+        url: https://home-store-packages.uniontech.com/appstore/pool/appstore/c/com.tencent.weixin/com.tencent.weixin_2.1.5_arm64.deb
+        sha256: v5ef1853d8265b183ea4720f272b046cd07579ffe436b50093f92e0455635a732
+        size: 81851040
+        # x-checker-data:
+        #   type: anitya
+        #   url-template: https://home-store-packages.uniontech.com/appstore/pool/appstore/c/com.tencent.weixin/com.tencent.weixin_$version_aarch64.deb
+        #   is-main-source: true
+
+  - name: fontconfig
+    buildsystem: simple
+    build-commands:
+      - install -pDm644 "local.conf" -t "/app/etc/fonts/";
+      - install -pDm644 "70-noto-cjk.conf" -t "/app/etc/fonts/conf.d/";
+      # `||:` return a successful exit status
+      - fc-cache -fsv ||:;
+    sources:
+      - type: file
+        url: https://gitlab.archlinux.org/archlinux/packaging/packages/noto-fonts-cjk/-/raw/5fd3534bf7a6e26c7506dc8f40dcd89f37d35627/70-noto-cjk.conf
+        sha256: 2417ac0e6720fe8da55ee59f16e36cfe96737bc21432460a322bb0f395e3a521
+      - type: file
+        path: local.conf
