@@ -35,23 +35,35 @@ modules:
       - install -Dm755 wechat.sh $FLATPAK_DEST/bin/wechat-uos
       - install -Dm644 com.tencent.wechat-uos.metainfo.xml -t $FLATPAK_DEST/share/metainfo
       - install -Dm644 com.tencent.wechat-uos.desktop -t $FLATPAK_DEST/share/applications
+      - install -Dm644 16x16.png $FLATPAK_DEST/share/icons/hicolor/16x16/apps/com.tencent.wechat-uos.png
+      - install -Dm644 32x32.png $FLATPAK_DEST/share/icons/hicolor/32x32/apps/com.tencent.wechat-uos.png
+      - install -Dm644 48x48.png $FLATPAK_DEST/share/icons/hicolor/48x48/apps/com.tencent.wechat-uos.png
+      - install -Dm644 64x64.png $FLATPAK_DEST/share/icons/hicolor/64x64/apps/com.tencent.wechat-uos.png
+      - install -Dm644 128x128.png $FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.tencent.wechat-uos.png
+      - install -Dm644 256x256.png $FLATPAK_DEST/share/icons/hicolor/256x256/apps/com.tencent.wechat-uos.png
+      - bsdtar -xzf license.tar.gz
+      - install -Dm644 license/etc/os-release -t $FLATPAK_DEST/etc
+      - install -Dm644 license/etc/lsb-release -t $FLATPAK_DEST/etc
+      - install -Dm644 license/var/lib/uos-license/.license.json -t $FLATPAK_DEST/var/lib/uos-license
+      - install -Dm644 license/var/uos/.license.key -t $FLATPAK_DEST/var/uos
+      - ln -s $FLATPAK_DEST/extra/libuosdevicea.so $FLATPAK_DEST/lib/libuosdevicea.so
     sources:
       - type: script
         commands:
           - export TMPDIR="$XDG_RUNTIME_DIR/app/$FLATPAK_ID"
-          - exec zypak-wrapper /app/extra/wechat/weixin.sh "$@"
+          - WINXIN=`ps -ef | grep weixin | grep -v grep | grep -v wechat-uos | wc -l`
+          - if [ 0 -ne $WINXIN ]; then
+          -   pidof wechat-uos | xargs kill -9
+          - fi
+          - exec zypak-wrapper /app/extra/wechat/weixin "$@"
         dest-filename: wechat.sh
 
       - type: script
         commands:
           - bsdtar --to-stdout -xf wechat-uos.deb data.* | bsdtar -xf -
-          - bsdtar -xzf license.tar.gz
           - mv opt/apps/com.tencent.weixin/files/weixin wechat
-          - mv usr/share /app/
-          - mv license/etc /app/
-          - mv license/var /app/
-          - rm share/applications/weixin.desktop
-          - rm -rf wechat-uos.deb license.tar.gz usr opt license data.*
+          - mv usr/lib/license/libuosdevicea.so .
+          - rm -rf wechat-uos.deb usr opt data.*
         dest-filename: apply_extra
 
       - type: file
@@ -60,11 +72,26 @@ modules:
       - type: file
         path: com.tencent.wechat-uos.desktop
 
-      - type: extra-data
-        filename: license.tar.gz
-        url: https://aur.archlinux.org/cgit/aur.git/plain/license.tar.gz?h=wechat-uos
-        sha256: 53760079c1a5b58f2fa3d5effe1ed35239590b288841d812229ef4e55b2dbd69
-        size: 1354
+      - type: file
+        path: icons/16x16.png
+
+      - type: file
+        path: icons/32x32.png
+
+      - type: file
+        path: icons/48x48.png
+
+      - type: file
+        path: icons/64x64.png
+
+      - type: file
+        path: icons/128x128.png
+
+      - type: file
+        path: icons/256x256.png
+
+      - type: file
+        path: license.tar.gz
 
       - type: extra-data
         filename: wechat-uos.deb
@@ -87,6 +114,7 @@ modules:
         #   type: anitya
         #   url-template: https://home-store-packages.uniontech.com/appstore/pool/appstore/c/com.tencent.weixin/com.tencent.weixin_$version_aarch64.deb
         #   is-main-source: true
+
 
   - name: fontconfig
     buildsystem: simple
