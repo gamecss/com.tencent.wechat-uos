@@ -44,12 +44,12 @@ modules:
 
       - type: script
         commands:
-          - bsdtar --to-stdout -xf wechat.deb data.* | bsdtar -xf -
-          - badtar -xzf license.tar.gz
+          - bsdtar --to-stdout -xf wechat-uos.deb data.* | bsdtar -xf -
+          - bsdtar -xzf license.tar.gz
           - mv opt/apps/com.tencent.weixin/files/weixin wechat
-          - cp -r usr/share/* $FLATPAK_DEST/share/
-          - cp license/etc/* $FLATPAK_DEST/etc/
-          - cp -r license/var/* $FLATPAK_DEST/var/
+          - mv usr/share .
+          - mv license/etc .
+          - mv license/var .
           - rm share/applications/weixin.desktop
           - rm -rf wechat.deb license.tar.gz usr opt license data.*
         dest-filename: apply_extra
@@ -60,8 +60,11 @@ modules:
       - type: file
         path: com.tencent.wechat-uos.desktop
 
-      - type: file
-        path: license.tar.gz
+      - type: extra-data
+        filename: license.tar.gz
+        url: https://aur.archlinux.org/cgit/aur.git/plain/license.tar.gz?h=wechat-uos
+        sha256: 53760079c1a5b58f2fa3d5effe1ed35239590b288841d812229ef4e55b2dbd69
+        size: 1354
 
       - type: extra-data
         filename: wechat-uos.deb
@@ -98,3 +101,4 @@ modules:
         sha256: 2417ac0e6720fe8da55ee59f16e36cfe96737bc21432460a322bb0f395e3a521
       - type: file
         path: local.conf
+
