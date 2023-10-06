@@ -46,7 +46,8 @@ modules:
       - install -Dm644 license/etc/lsb-release -t $FLATPAK_DEST/etc
       - install -Dm644 license/var/lib/uos-license/.license.json -t $FLATPAK_DEST/var/lib/uos-license
       - install -Dm644 license/var/uos/.license.key -t $FLATPAK_DEST/var/uos
-      - ln -s $FLATPAK_DEST/extra/libuosdevicea.so $FLATPAK_DEST/lib/libuosdevicea.so
+      - install -dm755 $FLATPAK_DEST/usr/lib/license
+      - ln -s $FLATPAK_DEST/extra/libuosdevicea.so $FLATPAK_DEST/usr/lib/license/libuosdevicea.so
     sources:
       - type: script
         commands:
